@@ -1,3 +1,13 @@
+const player1WinCount=localStorage.getItem("player1WinCount") || 0;
+const player2WinCount=localStorage.getItem("player2WinCount") || 0;
+
+const player1score=document.getElementById(`p1`);
+const player2score=document.getElementById(`p2`);
+
+player1score.textContent=player1WinCount;
+player2score.textContent=player2WinCount;
+
+
 const a= document.querySelectorAll(".btn"); //selecting all the buttons
 flag=false; //flag to check whose turn
 //event listener & change innerHTML
@@ -58,10 +68,29 @@ if(Object.values(board).every(cell=>cell!=="")){
 
 
 function updateScore(player){
-    const scoreElement=document.getElementById(`p${player}`);
-    const currentScore=parseInt(scoreElement.textContent);
-    scoreElement.textContent=currentScore+1;
+
+    if(player=="1"){
+        localStorage.setItem("player1WinCount",parseInt(player1WinCount)+1);
+
+    }
+    else{
+        localStorage.setItem("player2WinCount",parseInt(player2WinCount)+1);
+
+    }
 }
+
+function localStorageClear(){
+    localStorage.setItem("player1WinCount",0);
+    localStorage.setItem("player2WinCount",0);
+    player1score.textContent=0;
+    player2score.textContent=0;
+    alert("Scoreboard has been reset!");
+    window.reload();
+
+}
+
+const resetBtn = document.getElementById("resetBtn");
+resetBtn.addEventListener("click", localStorageClear);
 
 
 
